@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="2800" viewBox="0 0 2400 2800">
+<rect width="100%" height="100%" fill="#fcfcfb"/>
+<style>
+  .t{font-family:Segoe UI,Arial,sans-serif;fill:#1c1917}
+  .m{font-family:Segoe UI,Arial,sans-serif;fill:#57534e}
+  .box{stroke-width:2;rx:14;ry:14}
+</style>
+<text class="t" x="56" y="48" font-size="34" font-weight="700">Универсальный парсер — полная схема работы</text>
+<text class="m" x="56" y="82" font-size="18">gartner/custom_sources · от URL до articles · жёлтый = LLM · серый = локально · зелёный = запись · красный = отсев</text>
+<rect class="box" x="800" y="120" width="800" height="80" fill="#fff" stroke="#a8a29e"/>
+<text class="t" x="818" y="148" font-size="17" font-weight="700">Вход: URL домена</text>
+<text class="m" x="818" y="172" font-size="14">POST /api/custom-sources · scripts/scrape_science_org_news.py</text>
+<line x1="1200" y1="200" x2="1200" y2="242" stroke="#78716c" stroke-width="2"/>
+<polygon points="1200,250 1194,238 1206,238" fill="#78716c"/>
+<rect class="box" x="80" y="250" width="1100" height="160" fill="#f5f5f4" stroke="#a8a29e"/>
+<text class="t" x="98" y="278" font-size="17" font-weight="700">1. crawl_domain (crawl.py) — без LLM на ссылках</text>
+<text class="m" x="98" y="302" font-size="14">fetch_html_safe: главная, robots.txt, sitemap, RSS</text>
+<text class="m" x="98" y="322" font-size="14">BFS ≤45 URL, глубина ≤3, same_site · news_score + classify_page</text>
+<text class="m" x="98" y="342" font-size="14">Профиль: hubs, article_candidates, needs_browser, защита (QRATOR…)</text>
+<text class="m" x="98" y="362" font-size="14">Сопровождение: fetch.py · scoring.py · rules.py · browser.py (HTML only)</text>
+<rect class="box" x="1280" y="250" width="1040" height="160" fill="#f5f5f4" stroke="#a8a29e"/>
+<text class="t" x="1298" y="278" font-size="17" font-weight="700">Артефакт шага 1</text>
+<text class="m" x="1298" y="302" font-size="14">JSON-профиль → custom_sources.rules_json</text>
+<text class="m" x="1298" y="322" font-size="14">engine: crawl_trafilatura</text>
+<text class="m" x="1298" y="342" font-size="14">Список хабов и кандидатов-статей</text>
+<text class="m" x="1298" y="362" font-size="14">Флаг needs_browser для Playwright</text>
+<line x1="630" y1="410" x2="630" y2="462" stroke="#78716c" stroke-width="2"/>
+<polygon points="630,470 624,458 636,458" fill="#78716c"/>
+<rect class="box" x="80" y="470" width="700" height="140" fill="#f5f5f4" stroke="#a8a29e"/>
+<text class="t" x="98" y="498" font-size="17" font-weight="700">2a. classify_theme (локально)</text>
+<text class="m" x="98" y="522" font-size="14">Словарь нефтегаза по HTML главной</text>
+<text class="m" x="98" y="542" font-size="14">≥3 → oilgas · 1–2 → mixed · 0 → other</text>
+<text class="m" x="98" y="562" font-size="14">Токен в домене (neft/gaz/oil…) спасает отказ</text>
+<rect class="box" x="820" y="470" width="700" height="140" fill="#fff4d6" stroke="#b45309"/>
+<text class="t" x="838" y="498" font-size="17" font-weight="700">2b. LLM ① refine_theme_once</text>
+<text class="m" x="838" y="522" font-size="14">Только hits &lt; 3 · ≤1 вызов на домен</text>
+<text class="m" x="838" y="542" font-size="14">oilgas / mixed / other</text>
+<text class="m" x="838" y="562" font-size="14">Файл: llm_gates.py / theme.py</text>
+<rect class="box" x="1620" y="490" width="700" height="100" fill="#fef2f2" stroke="#b91c1c"/>
+<text class="t" x="1638" y="518" font-size="17" font-weight="700">Отказ источника</text>
+<text class="m" x="1638" y="542" font-size="14">theme=other → сайт не сохраняем</text>
+<text class="m" x="1638" y="562" font-size="14">Карточки не качаются</text>
+<line x1="1520" y1="540" x2="1612" y2="540" stroke="#b91c1c" stroke-width="2"/>
+<polygon points="1620,540 1608,534 1608,546" fill="#b91c1c"/>
+<line x1="430" y1="610" x2="430" y2="672" stroke="#78716c" stroke-width="2"/>
+<polygon points="430,680 424,668 436,668" fill="#78716c"/>
+<rect class="box" x="80" y="680" width="1440" height="130" fill="#f5f5f4" stroke="#a8a29e"/>
+<text class="t" x="98" y="708" font-size="17" font-weight="700">3. scrape_discovered (pipeline.py)</text>
+<text class="m" x="98" y="732" font-size="14">Хабы + RSS → ссылки (news_score / looks_like_article_url) · пагинация next/«далее»</text>
+<text class="m" x="98" y="752" font-size="14">needs_browser → Playwright: сеть, «ещё», снять HTML (не VLM)</text>
+<text class="m" x="98" y="772" font-size="14">Лимит: 8 карточек (добавление сайта) / 40 (scrape_all)</text>
+<line x1="430" y1="810" x2="430" y2="872" stroke="#78716c" stroke-width="2"/>
+<polygon points="430,880 424,868 436,868" fill="#78716c"/>
+<rect class="box" x="80" y="880" width="700" height="150" fill="#f5f5f4" stroke="#a8a29e"/>
+<text class="t" x="98" y="908" font-size="17" font-weight="700">4a. classify_page / resolve_page_kind</text>
+<text class="m" x="98" y="932" font-size="14">Эвристика article / hub / other</text>
+<text class="m" x="98" y="952" font-size="14">id_4 / ELEMENT_ID / news_id → всегда article</text>
+<text class="m" x="98" y="972" font-size="14">Однозначные URL без LLM</text>
+<rect class="box" x="820" y="880" width="700" height="150" fill="#fff4d6" stroke="#b45309"/>
+<text class="t" x="838" y="908" font-size="17" font-weight="700">4b. LLM ② classify_kind_llm</text>
+<text class="m" x="838" y="932" font-size="14">Только is_ambiguous_kind · бюджет 8</text>
+<text class="m" x="838" y="952" font-size="14">article / hub / junk</text>
+<text class="m" x="838" y="972" font-size="14">hub/junk → skip извлечения</text>
+<rect class="box" x="1620" y="910" width="700" height="100" fill="#fef2f2" stroke="#b91c1c"/>
+<text class="t" x="1638" y="938" font-size="17" font-weight="700">Skip страницы</text>
+<text class="m" x="1638" y="962" font-size="14">Лента / junk — trafilatura не зовём</text>
+<text class="m" x="1638" y="982" font-size="14">Экономия шума и бюджета</text>
+<line x1="1520" y1="960" x2="1612" y2="960" stroke="#b91c1c" stroke-width="2"/>
+<polygon points="1620,960 1608,954 1608,966" fill="#b91c1c"/>
+<line x1="430" y1="1030" x2="430" y2="1092" stroke="#78716c" stroke-width="2"/>
+<polygon points="430,1100 424,1088 436,1088" fill="#78716c"/>
+<rect class="box" x="80" y="1100" width="1440" height="120" fill="#f5f5f4" stroke="#a8a29e"/>
+<text class="t" x="98" y="1128" font-size="17" font-weight="700">5. extract_article_page (article_extract.py) — без LLM</text>
+<text class="m" x="98" y="1152" font-size="14">Отсев JPEG/PDF/ZIP → trafilatura (+ meta) → fallback BeautifulSoup</text>
+<text class="m" x="98" y="1172" font-size="14">≥ ~200 символов текста · локальный polish_title · дата из meta / &lt;time&gt; / URL</text>
+<line x1="430" y1="1220" x2="430" y2="1282" stroke="#78716c" stroke-width="2"/>
+<polygon points="430,1290 424,1278 436,1278" fill="#78716c"/>
+<rect class="box" x="80" y="1290" width="700" height="140" fill="#fff4d6" stroke="#b45309"/>
+<text class="t" x="98" y="1318" font-size="17" font-weight="700">6a. LLM ③ polish_title_llm</text>
+<text class="m" x="98" y="1342" font-size="14">Только is_generic_title</text>
+<text class="m" x="98" y="1362" font-size="14">Бюджет 10 / домен</text>
+<text class="m" x="98" y="1382" font-size="14">Убрать chrome меню / title сайта</text>
+<rect class="box" x="820" y="1290" width="700" height="140" fill="#fff4d6" stroke="#b45309"/>
+<text class="t" x="838" y="1318" font-size="17" font-weight="700">6b. LLM ④ judge_article_keep</text>
+<text class="m" x="838" y="1342" font-size="14">Главный фильтр · бюджет 24</text>
+<text class="m" x="838" y="1362" font-size="14">keep=false → не пишем</text>
+<text class="m" x="838" y="1382" font-size="14">Ошибка API ≠ автоматический drop</text>
+<rect class="box" x="1620" y="1310" width="700" height="100" fill="#fef2f2" stroke="#b91c1c"/>
+<text class="t" x="1638" y="1338" font-size="17" font-weight="700">Drop карточки</text>
+<text class="m" x="1638" y="1362" font-size="14">About, ПДн, каталог, навигация…</text>
+<text class="m" x="1638" y="1382" font-size="14">Не попадает в raw/radar</text>
+<line x1="1520" y1="1360" x2="1612" y2="1360" stroke="#b91c1c" stroke-width="2"/>
+<polygon points="1620,1360 1608,1354 1608,1366" fill="#b91c1c"/>
+<line x1="430" y1="1430" x2="430" y2="1492" stroke="#78716c" stroke-width="2"/>
+<polygon points="430,1500 424,1488 436,1488" fill="#78716c"/>
+<rect class="box" x="80" y="1500" width="700" height="150" fill="#ecfdf5" stroke="#047857"/>
+<text class="t" x="98" y="1528" font-size="17" font-weight="700">7a. Запись парсера</text>
+<text class="m" x="98" y="1552" font-size="14">data/raw/custom_*.json + .csv</text>
+<text class="m" x="98" y="1572" font-size="14">SQLite custom_sources</text>
+<text class="m" x="98" y="1592" font-size="14">Ещё не таблица articles</text>
+<rect class="box" x="820" y="1500" width="700" height="150" fill="#ecfdf5" stroke="#047857"/>
+<text class="t" x="838" y="1528" font-size="17" font-weight="700">7b. «Обновить данные»</text>
+<text class="m" x="838" y="1552" font-size="14">scrape_all → merge_and_upsert</text>
+<text class="m" x="838" y="1572" font-size="14">Дедуп по link → articles</text>
+<text class="m" x="838" y="1592" font-size="14">Дальше — контур радара (кластеры)</text>
+<rect class="box" x="80" y="1740" width="2240" height="120" fill="#fff" stroke="#a8a29e"/>
+<text class="t" x="98" y="1768" font-size="17" font-weight="700">Бюджет LLM на домен (LlmBudget)</text>
+<text class="m" x="98" y="1792" font-size="14">① тема: 1 · ② kind: 8 · ③ title: 10 · ④ keep: 24</text>
+<text class="m" x="98" y="1812" font-size="14">FORCE_HEURISTIC=1 или нет ключа → все гейты no-op, остаётся краул + trafilatura</text>
+<text class="m" x="98" y="1832" font-size="14">Скрин страницы и VLM в контуре не используются</text>
+<line x1="56" y1="1940" x2="2344" y2="1940" stroke="#e7e5e4" stroke-width="2"/>
+<text class="t" x="56" y="1980" font-size="24" font-weight="700">Легенда</text>
+<rect x="56" y="2010" width="40" height="28" rx="8" fill="#f5f5f4" stroke="#a8a29e" stroke-width="2"/>
+<text class="t" x="112" y="2030" font-size="16">Локальный код</text>
+<rect x="420" y="2010" width="40" height="28" rx="8" fill="#fff4d6" stroke="#b45309" stroke-width="2"/>
+<text class="t" x="476" y="2030" font-size="16">Вызов LLM</text>
+<rect x="780" y="2010" width="40" height="28" rx="8" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text class="t" x="836" y="2030" font-size="16">Успешная запись</text>
+<rect x="1140" y="2010" width="40" height="28" rx="8" fill="#fef2f2" stroke="#b91c1c" stroke-width="2"/>
+<text class="t" x="1196" y="2030" font-size="16">Отказ / skip / drop</text>
+<text class="m" x="56" y="2100" font-size="15">Ключевые файлы: crawl.py · pipeline.py · article_extract.py · llm_gates.py · fetch.py · browser.py · service.py · engine.py · scoring.py · theme.py</text>
+<text class="m" x="56" y="2135" font-size="15">Документация: docs/parser.md</text>
+</svg>

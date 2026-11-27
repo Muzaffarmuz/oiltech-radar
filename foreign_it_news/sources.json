@@ -1,0 +1,62 @@
+[
+  {
+    "id": "exxonmobil",
+    "name": "ExxonMobil",
+    "start_url": "https://corporate.exxonmobil.com/news"
+  },
+  {
+    "id": "shell",
+    "name": "Shell",
+    "start_url": "https://www.shell.com/news-and-insights.html"
+  },
+  {
+    "id": "bp",
+    "name": "BP",
+    "start_url": "https://www.bp.com/en/global/corporate/news-and-insights.html"
+  },
+  {
+    "id": "totalenergies",
+    "name": "TotalEnergies",
+    "start_url": "https://totalenergies.com/media/news"
+  },
+  {
+    "id": "chevron",
+    "name": "Chevron",
+    "start_url": "https://www.chevron.com/newsroom"
+  },
+  {
+    "id": "equinor",
+    "name": "Equinor",
+    "start_url": "https://www.equinor.com/news"
+  },
+  {
+    "id": "eni",
+    "name": "Eni",
+    "start_url": "https://www.eni.com/en-IT/media.html"
+  },
+  {
+    "id": "conocophillips",
+    "name": "ConocoPhillips",
+    "start_url": "https://www.conocophillips.com/newsroom/"
+  },
+  {
+    "id": "petrobras",
+    "name": "Petrobras",
+    "start_url": "https://agencia.petrobras.com.br/en"
+  },
+  {
+    "id": "occidental",
+    "name": "Occidental (Oxy)",
+    "start_url": "https://www.oxy.com/news"
+  },
+  {
+    "id": "aramco",
+    "name": "Saudi Aramco",
+    "start_url": "https://www.aramco.com/en/news-media"
+  },
+  {
+    "id": "adnoc",
+    "name": "ADNOC",
+    "start_url": "https://www.adnoc.ae/en/news-and-media"
+  }
+]

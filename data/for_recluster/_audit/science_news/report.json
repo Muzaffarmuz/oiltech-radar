@@ -1,0 +1,28 @@
+{
+  "corpus": "science_news",
+  "label": "научные новости",
+  "model": "gpt-oss-120b",
+  "fit_min": 0.6,
+  "stats": {
+    "input": 437,
+    "output": 437,
+    "kept": 279,
+    "reassigned": 124,
+    "unassigned": 21,
+    "dropped": 13,
+    "by_status": {
+      "kept": 279,
+      "dropped": 13,
+      "reassigned": 124,
+      "unassigned": 21
+    },
+    "live_clusters": 11,
+    "live_subclusters": 0
+  },
+  "paths": {
+    "taxonomy": "C:\\Users\\Муз\\Desktop\\ГАРТНЕР\\Oil radar 4\\data\\for_recluster\\_audit\\science_news\\taxonomy_decisions.jsonl",
+    "fit": "C:\\Users\\Муз\\Desktop\\ГАРТНЕР\\Oil radar 4\\data\\for_recluster\\_audit\\science_news\\fit_decisions.jsonl",
+    "reassign": "C:\\Users\\Муз\\Desktop\\ГАРТНЕР\\Oil radar 4\\data\\for_recluster\\_audit\\science_news\\reassign_decisions.jsonl",
+    "audited": "C:\\Users\\Муз\\Desktop\\ГАРТНЕР\\Oil radar 4\\data\\for_recluster\\_audit\\science_news\\audited.jsonl"
+  }
+}

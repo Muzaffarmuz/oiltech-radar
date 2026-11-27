@@ -1,0 +1,89 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+secrets/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp / local scratch
+_tmp_*
+*.tmp
+*.log
+*.bak
+*.bak_*
+*.rar
+*.zip
+*.7z
+
+# Large / regenerable data (keep portal + flow snapshots for hosted demo)
+data/runs/*
+!data/runs/flow_tags/
+data/runs/flow_tags/*
+!data/runs/flow_tags/policy_clusters_report.json
+!data/runs/flow_tags/investments_clusters_report.json
+!data/runs/flow_tags/policy_enrich_lab.json
+!data/runs/flow_tags/investments_enrich_lab.json
+!data/runs/science_org_news/
+data/runs/science_org_news/*
+!data/runs/science_org_news/clusters_report.json
+!data/runs/patents/
+data/runs/patents/*
+!data/runs/patents/patent_clusters_report.json
+!data/runs/patents/science_flow_payload.json
+!data/runs/patents/science_patent_details.json
+!data/runs/foreign_it/
+data/runs/foreign_it/*
+!data/runs/foreign_it/clusters_report.json
+!data/runs/foreign_it/portal_data.json
+data/cache/
+data/raw/
+data/exports/
+data/**/*.db
+data/**/*.sqlite
+data/**/*.sqlite3
+*.db
+*.sqlite
+*.sqlite3
+
+# Heavy scrape dumps (optional local corpus)
+foreign_it_news/out/
+foreign_it_news/out_trade/
+foreign_it_news/out_adapters/
+!foreign_it_news/out_trade/.gitkeep
+!foreign_it_news/out/.gitkeep
+
+# Node / frontend build leftovers
+node_modules/
+dist/
+build/
+
+# Presentations / media dumps
+Готовая_презентация/
+СОЗВОН */
+books/
+*.xlsx
+*.xls
+*.pptx
+*.pdf

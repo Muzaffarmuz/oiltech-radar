@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ИТ и автоматизация — OilTech Radar</title>
+  <script src="/static/theme-init.js?v=1"></script>
+  <link rel="stylesheet" href="/static/concept.css?v=9" />
+  <link rel="stylesheet" href="/static/future-flow.css?v=31" />
+  <link rel="stylesheet" href="/static/themes.css?v=5" />
+  <link rel="stylesheet" href="/static/styles.css?v=flow-shell-4" />
+  <link rel="stylesheet" href="/static/news-it-shell.css?v=7" />
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body class="it-flow-page" data-flow="digital">
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Навигация">
+      <a class="brand" href="/"><span class="brand-mark">◈</span><span>OILTECH<br><strong>RADAR</strong></span></a>
+      <span class="side-label">ПОТОКИ СОБЫТИЙ</span>
+      <nav class="side-nav flow-side-nav">
+        <a href="/"><span>◫</span> Обзор</a>
+        <a class="active" href="/flows/news/digital"><span>↗</span> ИТ и автоматизация</a>
+        <a href="/flows/science"><span>◈</span> Наука и патенты</a>
+        <a href="/flows/investments"><span>◇</span> Инвестиции и стартапы</a>
+        <a href="/flows/policy"><span>⚖</span> Политика и рынок</a>
+        <a href="/flows/foreign-companies"><span>◎</span> Иностранные компании</a>
+      </nav>
+      <div class="side-bottom"><span class="future-status-dot"></span><span>Живые данные из портала<br><small>Настройка источников — в шапке потока</small></span></div>
+    </aside>
+    <main class="main future-main">
+      <header class="topbar">
+        <div class="breadcrumb">Платформа <span>/</span> <b>ИТ и автоматизация</b></div>
+        <a class="icon-button" href="/#streams">← Контур продукта</a>
+      </header>
+
+      <section class="flow-hero-concept it-flow-hero" id="flowHero">
+        <div>
+          <span class="eyebrow">ПОТОК 01 · ПРОМЫШЛЕННЫЕ ТЕХНОЛОГИИ</span>
+          <h1>ИТ и автоматизация в нефтегазе</h1>
+          <p>
+            Темы, сигналы и компании из отраслевых новостных источников. Этот действующий поток — часть общего радара технологий.
+          </p>
+          <div class="flow-status"><span></span><b>Живые данные</b> · новостные публикации</div>
+          <div class="meta" id="metaPills"></div>
+          <div class="flow-hero-toolbar">
+            <div class="actions">
+              <label class="muted">Частота
+                <select id="updateMode" aria-label="Частота обновления">
+                  <option value="weekly">Раз в неделю</option>
+                  <option value="daily">Ежедневно</option>
+                  <option value="manual">Только вручную</option>
+                </select>
+              </label>
+              <button class="primary" id="refreshBtn" type="button">Обновить данные</button>
+            </div>
+            <button type="button" class="flow-settings-btn" id="flowSettingsBtn" aria-haspopup="dialog" aria-controls="flowModal">
+              Настройка потока
+              <span class="flow-count" id="flowSourcesCount" hidden></span>
+            </button>
+          </div>
+          <div id="statusBanner" class="banner" style="display:none"></div>
+        </div>
+        <div class="flow-hero-symbol" aria-hidden="true">↗</div>
+        <a class="pill audit-link" href="/audit">Audit</a>
+      </section>
+
+      <nav class="flow-tabs" aria-label="Переключение потоков">
+        <a href="/flows/news/digital" data-flow-tab="digital" class="active">01 · ИТ и автоматизация</a>
+        <a href="/flows/science" data-flow-tab="science">02 · Наука и патенты</a>
+        <a href="/flows/investments" data-flow-tab="investments">03 · Инвестиции и стартапы</a>
+        <a href="/flows/policy" data-flow-tab="policy">04 · Политика и рынок</a>
+        <a href="/flows/foreign-companies" data-flow-tab="foreign">05 · Иностранные компании</a>
+      </nav>
+
+      <div class="it-flow-body">
+        <div class="shell">
+          <div class="modal-backdrop" id="flowModalBackdrop" hidden>
+            <div class="modal flow-modal" id="flowModal" role="dialog" aria-modal="true" aria-labelledby="flowModalTitle">
+              <header class="modal-head">
+                <div>
+                  <h2 id="flowModalTitle">Настройка потока</h2>
+                  <p class="intro" style="margin:6px 0 0">
+                    Добавьте домен. Парсер обойдёт сайт, снимет текст через trafilatura и пропустит карточки через точечные LLM-гейты. «Обновить данные» заберёт их в поток.
+                  </p>
+                </div>
+                <button type="button" id="closeFlowModal">Закрыть</button>
+              </header>
+              <div class="sources-add-row">
+                <input id="customSourceUrl" type="url" placeholder="https://itek.ru или https://comnews.ru/…" />
+                <button type="button" class="primary" id="addCustomSourceBtn">Добавить сайт</button>
+              </div>
+              <div id="customSourceBanner" class="banner" style="display:none"></div>
+              <ul class="list sources-list" id="customSourcesList"></ul>
+            </div>
+          </div>
+
+          <div class="search-row">
+            <div class="search-input-row">
+              <input id="searchInput" type="text" placeholder="Тег: бурение, цифровой двойник, LLM…" autocomplete="off" />
+              <button type="button" class="search-tag-add" id="searchTagAddBtn">Добавить тег</button>
+              <div class="global-filters">
+                <select id="periodSelect" title="Период для всех блоков ниже">
+                  <option value="all">Всё время</option>
+                  <option value="12">12 месяцев</option>
+                  <option value="6">6 месяцев</option>
+                  <option value="3">3 месяца</option>
+                  <option value="1">1 месяц</option>
+                  <option value="7d">1 неделя</option>
+                </select>
+                <div class="multi-filter" id="companyFilter" title="Можно выбрать несколько компаний">
+                  <button type="button" class="multi-filter-btn" id="companyFilterBtn" aria-expanded="false">Все компании</button>
+                  <div class="multi-filter-panel" id="companyFilterPanel" hidden></div>
+                </div>
+                <div class="multi-filter" id="sourceFilter" title="Можно выбрать несколько источников">
+                  <button type="button" class="multi-filter-btn" id="sourceFilterBtn" aria-expanded="false">Все источники</button>
+                  <div class="multi-filter-panel" id="sourceFilterPanel" hidden></div>
+                </div>
+              </div>
+            </div>
+            <div class="search-tags" id="searchTags" hidden></div>
+          </div>
+
+          <section class="kpis" id="kpis"></section>
+
+          <section class="card" style="margin-top:18px">
+            <h2>Что изменилось</h2>
+            <p class="intro" id="diffIntro">Кратко по выбранному периоду — какие темы набирают упоминания.</p>
+            <ul class="list" id="diffList"></ul>
+          </section>
+
+          <section class="grid-2">
+            <div class="card map-stack-card">
+              <h2>Карта стадий (новизна × внедрённость) <span class="method-help" tabindex="0" aria-label="Методика расчёта стадий" title="Новизна: 45% свежесть упоминаний, 35% разнообразие тем, 20% объём событий. Внедрённость: 40% объём событий, 40% число компаний, 20% длительность наблюдения. Это эвристические индикаторы по публикациям, не подтверждённые показатели фактического внедрения. Стадия назначается по порогу 55 баллов на каждой оси.">?</span></h2>
+              <p class="intro">Наведите курсор мыши на кружок для подробной информации</p>
+              <div id="quadrant"></div>
+              <h2 class="chart-subhead">Накопительный рост тем</h2>
+              <p class="intro">Сумма упоминаний нарастающим итогом за выбранный период. Список справа управляет обоими графиками.</p>
+              <div id="cumulativeChart"></div>
+              <div class="cumul-legend" id="cumulativeLegend"></div>
+            </div>
+            <div class="card theme-pick-card">
+              <h2>Темы на графиках</h2>
+              <p class="intro">По убыванию упоминаний. Клик подсвечивает тему на обоих графиках слева; можно выбрать несколько.</p>
+              <div class="theme-pick-actions">
+                <button type="button" id="themeSelectAll" class="theme-pick-btn">Выбрать все</button>
+                <button type="button" id="themeClearAll" class="theme-pick-btn">Сбросить</button>
+              </div>
+              <ul class="list theme-pick-list" id="themePickList"></ul>
+            </div>
+          </section>
+
+          <section class="card trends-section" style="margin-top:18px">
+            <h2>Растущие / угасающие</h2>
+            <p class="intro">По наклону упоминаний в выбранном периоде.</p>
+            <div class="trends-grid">
+              <div>
+                <h3 class="trends-col-title">Растут</h3>
+                <ul class="list" id="growingList"></ul>
+              </div>
+              <div>
+                <h3 class="trends-col-title">Снижаются</h3>
+                <ul class="list" id="fadingList"></ul>
+              </div>
+              <div>
+                <h3 class="trends-col-title">Компании</h3>
+                <ul class="list" id="companiesList"></ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="topics-section" style="margin-top:18px">
+            <div class="topics-head">
+              <h2 style="margin:0">Каталог технологических тем</h2>
+              <button type="button" class="topics-toggle" id="topicsToggle" hidden>Развернуть все темы</button>
+            </div>
+            <div class="topics" id="topics"></div>
+          </section>
+
+        </div>
+      </div>
+
+      <footer class="footer"><span>OILTECH RADAR · ПОТОК ИТ</span></footer>
+    </main>
+  </div>
+
+  <div class="drawer-backdrop" id="backdrop"></div>
+  <aside class="drawer" id="drawer">
+    <header>
+      <div>
+        <div class="pill" id="drawerStage"></div>
+        <h2 id="drawerTitle" style="margin:8px 0 0"></h2>
+        <p class="muted" id="drawerDesc"></p>
+      </div>
+      <button type="button" id="closeDrawer">Закрыть</button>
+    </header>
+    <div id="drawerMeta" class="meta" style="margin-top:12px"></div>
+    <div class="card" style="margin-top:14px;box-shadow:none">
+      <h3 style="margin-top:0">Динамика упоминаний</h3>
+      <div id="trendChart"></div>
+    </div>
+    <div class="card" style="margin-top:14px;box-shadow:none">
+      <h3 style="margin-top:0">Сценарий и действие</h3>
+      <p id="forecastNarrative"></p>
+      <p><strong>Действие:</strong> <span id="forecastAction"></span></p>
+    </div>
+    <div class="card" style="margin-top:14px;box-shadow:none">
+      <h3 style="margin-top:0">Подкластеры</h3>
+      <p class="muted" style="font-size:12px;margin-top:0">Уточнения внутри темы (если группа достаточно крупная и разнородная).</p>
+      <ul class="list" id="drawerSubclusters"></ul>
+    </div>
+    <div class="card" style="margin-top:14px;box-shadow:none">
+      <h3 style="margin-top:0">Компании в теме</h3>
+      <ul class="list" id="drawerCompanies"></ul>
+    </div>
+    <div class="card" style="margin-top:14px;box-shadow:none">
+      <h3 style="margin-top:0">Факты со ссылками</h3>
+      <div class="events" id="drawerEvents"></div>
+    </div>
+  </aside>
+
+  <script src="/static/flow-data-cache.js?v=7"></script>
+  <script src="/static/app.js?v=flow-shell-10"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Статьи парсера — OilTech Radar 3.2</title>
+  <link rel="stylesheet" href="/static/styles.css?v=parser-articles-4" />
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-main">
+        <div class="pill">OilTech Radar 3.2</div>
+        <h1>Статьи нового парсера</h1>
+        <p>
+          Карточки после локального краула, trafilatura и точечных LLM-гейтов.
+        </p>
+      </div>
+      <div class="hero-toolbar">
+        <div class="actions">
+          <a class="pill" href="/">На радар</a>
+        </div>
+      </div>
+    </section>
+    <div id="parserCompareBox" class="parser-compare" hidden></div>
+    <div class="parser-page-search">
+      <input id="parserSearch" type="search" placeholder="Поиск по заголовку, сайту или тексту…" />
+    </div>
+    <div id="parserCount" class="muted"></div>
+    <div id="parserArticlesBox" class="parser-list" style="margin-top:12px"></div>
+  </div>
+  <script>
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+    function escapeAttr(value) {
+      return escapeHtml(value).replaceAll("'", "&#39;");
+    }
+    let ALL = [];
+    function renderSummary(data) {
+      const box = document.getElementById("parserCompareBox");
+      const bySource = data.by_source || [];
+      const count = data.count ?? (data.items || []).length;
+      const rows = bySource
+        .map(
+          (r) => `<tr><td>${escapeHtml(r.source || "")}</td><td>${escapeHtml(String(r.count ?? 0))}</td></tr>`
+        )
+        .join("");
+      box.hidden = false;
+      box.innerHTML = `<div>Добавлено статей: <strong>${count}</strong> из <strong>${bySource.length}</strong> источников</div>
+        <table>
+          <thead><tr><th>Источник</th><th>Статей</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    }
+    function render(items) {
+      const root = document.getElementById("parserArticlesBox");
+      document.getElementById("parserCount").textContent = items.length
+        ? `${items.length} статей`
+        : "Нет статей нового парсера";
+      if (!items.length) {
+        root.innerHTML = `<p class="muted">Ничего не найдено.</p>`;
+        return;
+      }
+      root.innerHTML = items.map((a) => `
+        <article class="parser-card">
+          <div class="meta">
+            <span class="pill">${escapeHtml(a.source || "")}</span>
+            <span class="pill">${escapeHtml(a.datatime || "без даты")}</span>
+          </div>
+          <h3>${escapeHtml(a.title || "")}</h3>
+          <p>${escapeHtml(a.preview || "")}</p>
+          ${a.link ? `<p style="margin-top:8px"><a href="${escapeAttr(a.link)}" target="_blank" rel="noopener">Открыть оригинал</a></p>` : ""}
+        </article>`).join("");
+    }
+    fetch("/api/parser-articles")
+      .then((r) => r.json())
+      .then((data) => {
+        ALL = data.items || [];
+        renderSummary(data);
+        render(ALL);
+      })
+      .catch((e) => {
+        document.getElementById("parserArticlesBox").innerHTML =
+          `<p class="muted">${escapeHtml(String(e))}</p>`;
+      });
+    document.getElementById("parserSearch").addEventListener("input", (e) => {
+      const q = (e.target.value || "").trim().toLowerCase();
+      if (!q) return render(ALL);
+      render(ALL.filter((a) =>
+        [a.title, a.source, a.preview, a.link].join(" ").toLowerCase().includes(q)
+      ));
+    });
+  </script>
+</body>
+</html>

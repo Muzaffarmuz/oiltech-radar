@@ -1,0 +1,7 @@
+.foreign-hero {
+  --flow-accent: #c4a35a;
+}
+
+.foreign-flow-page .foreign-hero .flow-status span {
+  background: #c4a35a;
+}

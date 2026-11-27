@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--bg:#f5f8f9;--ink:#17233a;--muted:#68788a;--card:#fff;--line:#e1e9ee;--accent:#168f91;--accent-2:#cb8854;--shadow:0 12px 34px rgba(22,43,65,.05);--font:Manrope,'Segoe UI',sans-serif}
+body{background:#f5f8f9}
+.flow-topbar{background:#101d34;color:#b6c7d8;min-height:57px;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:10px max(22px,calc((100vw - 1180px)/2));font-size:11px;font-weight:700}
+.flow-topbar a:first-child{color:#70e1d8;letter-spacing:.13em}.flow-topbar a:last-child{color:#e1eeee}.flow-topbar b{color:#63839c;margin:0 5px}
+.flow-topbar a{text-decoration:none}.flow-topbar a:hover{text-decoration:underline}
+.hero{background:radial-gradient(circle at 86% 50%,#244663,#11223d 62%);border:0;border-radius:18px;color:#fff;box-shadow:none}
+.hero h1{font-size:clamp(28px,3.2vw,42px);color:#fff}.hero p{color:#b6c9d6}.hero .pill{background:rgba(68,173,170,.13);border-color:rgba(98,217,209,.28);color:#7fe0d7;font-size:10px;letter-spacing:.12em}
+.hero .meta .pill{background:rgba(255,255,255,.07);color:#cadbe2;border-color:rgba(255,255,255,.16)}
+.shell{padding-top:25px}.card,.kpi,.topic-card{border-color:#e1e9ee;box-shadow:var(--shadow)}
+.method-help{display:inline-grid;place-items:center;width:18px;height:18px;border:1px solid #92b8bf;border-radius:50%;font-size:11px;color:#168f91;cursor:help;vertical-align:middle}
+.method-help:hover,.method-help:focus{background:#dff4f0;outline:2px solid #a8ded7}
+.hero-toolbar[hidden]{display:none!important}
+@media(max-width:620px){.flow-topbar{flex-wrap:wrap;justify-content:space-between}.flow-topbar span{order:3;width:100%}}

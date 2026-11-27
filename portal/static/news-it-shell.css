@@ -1,0 +1,190 @@
+/* Оболочка ИТ-потока в стиле остальных future-flow страниц; контент внутри .it-flow-body */
+
+body.it-flow-page {
+  margin: 0;
+  /* styles.css иначе перебивает фон/шрифт оболочки concept */
+  background: var(--bg, #f5f8f9) !important;
+  font-family: Manrope, "Segoe UI", sans-serif !important;
+  color: var(--ink, #17233a);
+}
+
+.it-flow-body {
+  margin-top: 8px;
+}
+
+.it-flow-body .shell {
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 28px;
+  background: transparent;
+}
+
+/* Убираем старый topbar/hero — их заменяет общий flow-hero-concept */
+.it-flow-body > .flow-topbar,
+.it-flow-body > .hero {
+  display: none !important;
+}
+
+.flow-hero-concept.it-flow-hero {
+  --flow-accent: #3d9a96;
+  position: relative;
+}
+
+.flow-hero-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 18px;
+  width: 100%;
+}
+
+/* Audit у правого края всего hero, не колонки с текстом */
+.flow-hero-concept.it-flow-hero > .audit-link {
+  position: absolute;
+  right: clamp(28px, 4vw, 58px);
+  bottom: 38px;
+  z-index: 2;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: #fff;
+  color: #17233a;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.flow-hero-concept.it-flow-hero > .audit-link:hover {
+  color: #0f3d3c;
+  background: #f3faf9;
+}
+
+.flow-hero-toolbar .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.flow-hero-toolbar label.muted {
+  color: #b4c4d3;
+  font-size: 11px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.flow-hero-toolbar select,
+.flow-hero-toolbar .flow-settings-btn,
+.flow-hero-toolbar .primary,
+.flow-hero-toolbar a.pill {
+  box-sizing: border-box;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.2;
+  height: 40px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+}
+
+.flow-hero-toolbar .flow-settings-btn,
+.flow-hero-toolbar .primary,
+.flow-hero-toolbar a.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-hero-toolbar select {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #e8f2f4;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23e8f2f4' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+/* Выпадающий список ОС рисует светлый фон — пункты должны быть тёмными */
+.flow-hero-toolbar select option {
+  color: #17233a;
+  background: #fff;
+}
+
+.flow-hero-toolbar .primary {
+  background: #3d9a96;
+  color: #fff;
+  border: 1px solid #3d9a96;
+  cursor: pointer;
+}
+
+.flow-hero-toolbar .primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.flow-hero-toolbar .flow-settings-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e8f2f4;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  /* перебить общие стили .flow-settings-btn из styles.css */
+  box-shadow: none;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.flow-hero-toolbar .flow-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(61, 154, 150, 0.35);
+  font-size: 11px;
+}
+
+.flow-hero-concept .meta {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.flow-hero-concept .meta .pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #d5e4ec;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11px;
+}
+
+.flow-tabs a[data-flow-tab="digital"].active,
+.flow-side-nav a[href="/flows/news/digital"].active {
+  /* active уже задаётся future-flow.css / concept */
+}
+
+@media (max-width: 900px) {
+  .flow-hero-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .flow-hero-concept.it-flow-hero > .audit-link {
+    position: static;
+    margin-top: 10px;
+    align-self: flex-end;
+  }
+}

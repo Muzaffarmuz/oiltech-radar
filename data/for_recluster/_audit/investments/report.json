@@ -1,0 +1,28 @@
+{
+  "corpus": "investments",
+  "label": "инвестиции",
+  "model": "gpt-oss-120b",
+  "fit_min": 0.6,
+  "stats": {
+    "input": 253,
+    "output": 253,
+    "kept": 40,
+    "reassigned": 68,
+    "unassigned": 9,
+    "dropped": 136,
+    "by_status": {
+      "kept": 40,
+      "dropped": 136,
+      "reassigned": 68,
+      "unassigned": 9
+    },
+    "live_clusters": 11,
+    "live_subclusters": 4
+  },
+  "paths": {
+    "taxonomy": "C:\\Users\\Муз\\Desktop\\ГАРТНЕР\\Oil radar 4\\data\\for_recluster\\_audit\\investments\\taxonomy_decisions.jsonl",
+    "fit": "C:\\Users\\Муз\\Desktop\\ГАРТНЕР\\Oil radar 4\\data\\for_recluster\\_audit\\investments\\fit_decisions.jsonl",
+    "reassign": "C:\\Users\\Муз\\Desktop\\ГАРТНЕР\\Oil radar 4\\data\\for_recluster\\_audit\\investments\\reassign_decisions.jsonl",
+    "audited": "C:\\Users\\Муз\\Desktop\\ГАРТНЕР\\Oil radar 4\\data\\for_recluster\\_audit\\investments\\audited.jsonl"
+  }
+}

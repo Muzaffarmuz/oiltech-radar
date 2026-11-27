@@ -1,0 +1,30 @@
+{
+  "purpose": "Снимок данных, которые портал читает сейчас, плюс полные тексты для повторной фильтрации и кластеризации.",
+  "copied_bytes": {
+    "policy/clusters_report.json": 4496382,
+    "policy/enrich.json": 787914,
+    "investments/clusters_report.json": 784093,
+    "investments/enrich.json": 221142,
+    "science/patents/clusters_report.json": 37156,
+    "science/news/clusters_report.json": 1330351,
+    "overview/portal_data.json": 1483229
+  },
+  "exported": {
+    "policy": {
+      "articles": 1506,
+      "missing_in_db": 0
+    },
+    "investments": {
+      "articles": 253,
+      "missing_in_db": 0
+    },
+    "science_news": {
+      "articles": 437,
+      "missing_in_source": 0
+    },
+    "patents": {
+      "patents": 3285,
+      "clustered": 1174
+    }
+  }
+}

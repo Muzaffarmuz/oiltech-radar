@@ -1,0 +1,372 @@
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity=".45"/><circle cx="12" cy="12" r="5" opacity=".7"/><path d="M12 3v9l6 3"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">OilTech Radar</div>
+        <div class="brand-sub">Технологическая разведка нефтегазовой отрасли</div>
+      </div>
+    </div>
+    <div class="topbar-sp"></div>
+    <div class="top-actions">
+      <div class="seg" role="group" aria-label="Период">
+        <button data-period="30" aria-pressed="false">Месяц</button>
+        <button data-period="90" aria-pressed="false">Квартал</button>
+        <button data-period="365" aria-pressed="true">Год</button>
+        <button data-period="0" aria-pressed="false">Всё время</button>
+      </div>
+      <button class="btn" id="btnRefresh" title="Обновить потоки данных">
+        <span class="pulse" id="pulse"></span><span id="refreshLabel">Обновлено 18 сен</span>
+      </button>
+      <button class="btn icon" id="btnSettings" aria-label="Настройки" title="Настройки">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="label" style="margin-bottom:8px">Для руководителей по стратегии, технологиям и R&amp;D</div>
+      <h1>Замечать технологические сдвиги раньше, чем они станут очевидны рынку</h1>
+      <p class="lede">Радар непрерывно читает <b>научные, корпоративные и медиа-источники</b> по 34 направлениям нефтегаза, превращает поток публикаций в <b>сигналы и тренды</b> и показывает, кто за ними стоит. Так решения о технологиях принимаются на фактах, а не по ощущениям.</p>
+    </div>
+    <div class="hero-facts">
+      <div class="fact"><div class="label">Источников в контуре</div><div class="v num" id="fSources">—</div><div class="d">наука · компании · медиа</div></div>
+      <div class="fact"><div class="label">Направлений</div><div class="v num">34</div><div class="d">от геологии до водорода</div></div>
+      <div class="fact"><div class="label">Сигналов за неделю</div><div class="v num" id="fSignals">—</div><div class="d" id="fSignalsD">новых или усиливающихся</div></div>
+    </div>
+  </div>
+</section>
+
+<nav class="nav" aria-label="Разделы">
+  <div class="nav-in">
+    <button data-view="overview" aria-current="page">Обзор</button>
+    <button data-view="news"><span class="dot" style="background:var(--news)"></span>Новости и рынок <span class="cnt" id="cntNews">481</span></button>
+    <button data-view="science"><span class="dot" style="background:var(--sci)"></span>Наука и патенты <span class="cnt">1 240</span></button>
+    <button data-view="invest"><span class="dot" style="background:var(--inv)"></span>Инвестиции и стартапы <span class="cnt">86</span></button>
+    <button data-view="policy"><span class="dot" style="background:var(--pol)"></span>Политика и рынок <span class="cnt" id="cntPol">14</span></button>
+    <button data-view="companies">Компании</button>
+    <button data-view="data">Данные</button>
+  </div>
+</nav>
+
+<main>
+  <!-- ================= OVERVIEW ================= -->
+  <section class="view" id="view-overview">
+    <div class="kpis" id="kpis"></div>
+
+    <div class="grid" style="margin-top:16px">
+      <div class="card c8">
+        <div class="card-h">
+          <div><h2>География источников</h2><div class="sub">Откуда приходят данные: университеты, НИИ, компании и медиа. Размер зоны — объём материалов за период.</div></div>
+          <div class="tools">
+            <div class="seg" role="group" aria-label="Слой карты" id="mapLayer">
+              <button data-layer="all" aria-pressed="true">Все</button>
+              <button data-layer="news">Медиа</button>
+              <button data-layer="sci">Наука</button>
+              <button data-layer="inv">Компании</button>
+            </div>
+          </div>
+        </div>
+        <div class="map-wrap" id="mapWrap">
+          <svg id="map" viewBox="0 0 1000 538" role="img" aria-label="Карта России с зонами источников"></svg>
+          <div class="map-ctl"><button id="zoomIn" aria-label="Приблизить">+</button><button id="zoomOut" aria-label="Отдалить">−</button><button id="zoomReset" aria-label="Сбросить" style="font-size:12px">⟲</button></div>
+          <div class="map-legend"><span><i style="background:var(--accent)"></i>Медиа и порталы</span><span><i style="background:var(--sci)"></i>Университеты и НИИ</span><span><i style="background:var(--inv)"></i>Компании</span></div>
+          <div class="map-tip" id="mapTip"></div>
+        </div>
+      </div>
+      <div class="card c4">
+        <div class="card-h"><div><h2>Центры активности</h2><div class="sub">Города по объёму материалов</div></div></div>
+        <div id="geoList"></div>
+      </div>
+
+      <div class="card c5">
+        <div class="card-h">
+          <div><h2>Сигналы недели</h2><div class="sub">Направления, где интерес вырос сильнее всего</div></div>
+          <span class="help left" tabindex="0">?<span class="tip"><b>Как отбираются сигналы</b>Сигнал — направление, у которого число упоминаний за последние 4 недели выше среднего за предыдущие 12 недель более чем на 40 %, при этом не менее 3 независимых источников. Оценка взвешена авторитетностью источника.</span></span>
+        </div>
+        <div class="sig-list" id="signals"></div>
+      </div>
+
+      <div class="card c7">
+        <div class="card-h">
+          <div><h2>Технологический ландшафт</h2><div class="sub">Объём событий по направлениям и типам источников за период</div></div>
+          <span class="help" tabindex="0">?<span class="tip"><b>Что в ячейках</b>Число извлечённых событий (одна технология + задача) за выбранный период. Цвет — относительная интенсивность внутри столбца. Строка «ИТ и автоматизация» построена на реальных данных прототипа; остальные строки — целевой охват версии 4.0 с ориентировочными объёмами.</span></span>
+        </div>
+        <div style="overflow-x:auto"><table class="matrix" id="matrix"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NEWS ================= -->
+  <section class="view" id="view-news" hidden>
+    <div class="chips" id="newsGroups"></div>
+    <div id="newsLive">
+      <div class="filters">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="q" placeholder="Поиск по темам, например «бурение»"></div>
+        <select id="fCompany"><option value="">Все компании</option></select>
+        <select id="fSource"><option value="">Все источники</option></select>
+        <select id="fStage"><option value="">Все стадии</option><option value="breakthrough">Прорывные</option><option value="emerging">Зарождающиеся</option><option value="mature">Зрелые</option><option value="fading">Угасающие</option></select>
+        <div class="sp"></div>
+        <span class="tag live"><span class="pulse" style="box-shadow:none;width:6px;height:6px"></span>Реальные данные · 6 источников</span>
+      </div>
+
+      <div class="grid">
+        <div class="card c12" id="diffCard">
+          <div class="card-h"><div><h2>Что изменилось</h2><div class="sub" id="diffSub"></div></div></div>
+          <div id="diffBody" class="two"></div>
+        </div>
+
+        <div class="card c7">
+          <div class="card-h">
+            <div><h2>Карта стадий</h2><div class="sub">Новизна × внедрённость. Размер круга — число упоминаний.</div></div>
+            <span class="help" tabindex="0">?<span class="tip"><b>Как считаются оси</b>
+              <ul><li><b>Новизна (0–100)</b> = 45 % свежесть последнего упоминания + 35 % разнообразие технологий в теме + 20 % объём событий.</li>
+              <li><b>Внедрённость (0–100)</b> = 40 % объём событий + 40 % число компаний-операторов, назвавших внедрение + 20 % длительность присутствия в потоке.</li>
+              <li>Порог 55 по каждой оси делит поле на четыре стадии. Источник — извлечённые события из отраслевых публикаций.</li></ul></span></span>
+          </div>
+          <div class="quad" id="quad"></div>
+          <div class="legend"><span><i style="background:var(--st-break)"></i>Прорывные</span><span><i style="background:var(--st-emerg)"></i>Зарождающиеся</span><span><i style="background:var(--st-mature)"></i>Зрелые</span><span><i style="background:var(--st-fade)"></i>Угасающие</span></div>
+        </div>
+
+        <div class="card c5">
+          <div class="card-h"><div><h2>Динамика тем</h2><div class="sub">Упоминания нарастающим итогом. Клик по теме — подсветка.</div></div></div>
+          <div class="lines" id="lines"></div>
+          <div class="pick" id="pick" style="margin-top:10px"></div>
+        </div>
+
+        <div class="card c4">
+          <div class="card-h"><div><h2>Растут</h2><div class="sub">По наклону упоминаний за период</div></div></div>
+          <div id="growing"></div>
+        </div>
+        <div class="card c4">
+          <div class="card-h"><div><h2>Снижаются</h2><div class="sub">Теряют информационный интерес</div></div></div>
+          <div id="fading"></div>
+        </div>
+        <div class="card c4">
+          <div class="card-h"><div><h2>Компании в потоке</h2><div class="sub">Операторы, названные в событиях</div></div></div>
+          <div class="co-list" id="coList"></div>
+        </div>
+
+        <div class="c12">
+          <div class="card-h" style="margin-bottom:10px"><div><h2>Каталог тем</h2><div class="sub" id="catSub"></div></div>
+            <div class="tools"><select id="sortTopics"><option value="mentions">По упоминаниям</option><option value="slope">По росту</option><option value="inn">По новизне</option><option value="exe">По внедрённости</option></select></div></div>
+          <div class="topics" id="topics"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="newsDemo" hidden></div>
+  </section>
+
+  <!-- ================= SCIENCE ================= -->
+  <section class="view" id="view-science" hidden>
+    <div class="chips" id="sciGroups"></div>
+    <div class="grid">
+      <div class="card c4">
+        <div class="card-h"><div><h2>Публикации по направлениям</h2><div class="sub">Статьи и патенты за 12 месяцев</div></div><span class="tag demo">макет</span></div>
+        <div id="sciBars"></div>
+      </div>
+      <div class="card c8">
+        <div class="card-h"><div><h2>Научные центры</h2><div class="sub">Университеты и НИИ по числу публикаций и цитируемости</div></div>
+          <span class="help" tabindex="0">?<span class="tip"><b>Индекс центра</b>Число публикаций за период × средняя цитируемость (eLibrary / RSCI) с поправкой на долю работ с индустриальным партнёром. Патенты учитываются по базе ФИПС.</span></span></div>
+        <div style="overflow-x:auto"><table class="table" id="sciCenters"></table></div>
+      </div>
+      <div class="card c7">
+        <div class="card-h"><div><h2>Свежие работы</h2><div class="sub">Публикации и патенты с наибольшим потенциалом переноса в практику</div></div></div>
+        <div id="pubs"></div>
+      </div>
+      <div class="card c5">
+        <div class="card-h"><div><h2>Наука → рынок</h2><div class="sub">Направления, где научная активность опережает новостной поток</div></div>
+          <span class="help" tabindex="0">?<span class="tip"><b>Разрыв «наука → рынок»</b>Отношение темпа роста публикаций к темпу роста новостных событий по направлению. Значение выше 1,5 — ранний сигнал: технология созревает в лабораториях, но ещё не вышла в промышленную повестку.</span></span></div>
+        <div id="gap"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INVEST ================= -->
+  <section class="view" id="view-invest" hidden>
+    <div class="grid">
+      <div class="card c4">
+        <div class="card-h"><div><h2>Куда идут деньги</h2><div class="sub">Объём сделок по направлениям, 12 мес.</div></div><span class="tag demo">макет</span></div>
+        <div id="invBars"></div>
+      </div>
+      <div class="card c8">
+        <div class="card-h"><div><h2>Сделки и раунды</h2><div class="sub">Инвестиции, гранты, СП и M&amp;A в технологиях нефтегаза</div></div></div>
+        <div id="deals"></div>
+      </div>
+      <div class="card c12">
+        <div class="card-h"><div><h2>Стартапы на радаре</h2><div class="sub">Команды, чьи технологии совпадают с растущими направлениями</div></div></div>
+        <div class="topics" id="startups"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= POLICY ================= -->
+  <section class="view" id="view-policy" hidden>
+    <div class="pol-intro">
+      <div>
+        <div class="label" style="margin-bottom:4px">Внешние условия</div>
+        <h2>Санкции, регулирование, инциденты и рыночные сдвиги</h2>
+        <p class="muted" style="margin-top:4px;max-width:78ch">Показывает, как внешние изменения меняют доступ к оборудованию, цепочки поставок и приоритеты технологий. Каждое событие связано с направлениями, на которые оно влияет.</p>
+      </div>
+      <span class="tag live" title="События и цифры взяты из открытых источников; оценки влияния — макет методики">Реальные события · оценка влияния — макет</span>
+    </div>
+
+    <div class="kpis" id="polKpis"></div>
+
+    <div class="grid" style="margin-top:16px">
+      <div class="card c7">
+        <div class="card-h">
+          <div><h2>Лента внешних событий</h2><div class="sub">Последние 9 месяцев · по дате, новые сверху</div></div>
+          <div class="tools"><div class="seg" role="group" aria-label="Тип события" id="polType">
+            <button data-t="" aria-pressed="true">Все</button><button data-t="sanc">Санкции</button><button data-t="reg">Регулирование</button><button data-t="inc">Инциденты</button><button data-t="mkt">Рынок</button>
+          </div></div>
+        </div>
+        <div class="tl" id="polTimeline"></div>
+      </div>
+
+      <div class="c5" style="display:flex;flex-direction:column;gap:16px;min-width:0">
+        <div class="card">
+          <div class="card-h">
+            <div><h2>Экспортная выручка, август 2026</h2><div class="sub">млн € в сутки и изменение к июлю</div></div>
+            <span class="help" tabindex="0">?<span class="tip"><b>Источник</b>Ежемесячный мониторинг экспорта ископаемого топлива CREA (Centre for Research on Energy and Clean Air), август 2026. Итого 604 млн € в сутки, −8 % к июлю.</span></span>
+          </div>
+          <div id="polExport"></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><h2>Риск цепочек поставок</h2><div class="sub">Где внешние ограничения сильнее всего бьют по технологиям</div></div>
+            <span class="help" tabindex="0">?<span class="tip"><b>Как считается риск</b>Оценка 0–100: 40 % — доля импорта в категории, 30 % — число действующих ограничений (санкционные пакеты ЕС и США, экспортный контроль), 30 % — наличие серийного отечественного аналога. В макете значения ориентировочные.</span></span></div>
+          <div id="polSupply"></div>
+        </div>
+      </div>
+
+      <div class="card c12">
+        <div class="card-h">
+          <div><h2>Как внешние события сдвигают технологические приоритеты</h2><div class="sub">Сила влияния типа событий на направление за 9 месяцев. Наведите на ячейку, чтобы увидеть причину.</div></div>
+          <span class="help" tabindex="0">?<span class="tip"><b>Сила влияния</b>Число событий типа, связанных с направлением, × тяжесть события (1–3) × вес источника. Связь «событие → направление» размечает языковая модель по тексту события, аналитик может её поправить.</span></span>
+        </div>
+        <div style="overflow-x:auto"><table class="imx" id="polImpact"></table></div>
+      </div>
+
+      <div class="c12">
+        <div class="card-h" style="margin-bottom:10px"><div><h2>Что это значит для решений</h2><div class="sub">Выводы радара по внешней среде на 25 сентября 2026</div></div></div>
+        <div class="takeaways" id="polTake"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COMPANIES ================= -->
+  <section class="view" id="view-companies" hidden>
+    <div class="grid">
+      <div class="card c12">
+        <div class="card-h"><div><h2>Карта активности компаний</h2><div class="sub">Число событий с меткой компании по направлениям. Основа для конкурентного анализа.</div></div>
+          <span class="help" tabindex="0">?<span class="tip"><b>Как формируется</b>Событие получает метку компании, если публикация называет её заказчиком или оператором внедрения (вендоры, вузы и СМИ не учитываются). Столбец «ИТ и автоматизация» — реальные данные, остальные — целевой охват.</span></span></div>
+        <div class="cmx" id="cmx"></div>
+      </div>
+      <div class="card c7">
+        <div class="card-h"><div><h2>События с меткой компании</h2><div class="sub" id="coEvSub"></div></div>
+          <div class="tools"><select id="coPick"></select></div></div>
+        <div id="coEvents"></div>
+      </div>
+      <div class="card c5">
+        <div class="card-h"><div><h2>Профиль компании</h2><div class="sub">Технологический фокус по событиям в потоке</div></div></div>
+        <div id="coProfile"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DATA ================= -->
+  <section class="view" id="view-data" hidden>
+    <div class="grid">
+      <div class="card c12">
+        <div class="card-h"><div><h2>Состояние потока</h2><div class="sub">Последний прогон 18 сен 2026, 06:52–07:07 UTC · все стадии успешны</div></div></div>
+        <div class="pipe" id="pipe"></div>
+      </div>
+      <div class="card c8">
+        <div class="card-h"><div><h2>Онтология тем</h2><div class="sub">Направление → тема → подтема. Наведите курсор, чтобы увидеть связи; клик открывает тему.</div></div>
+          <div class="tools"><span class="tag live">ИТ и автоматизация · реальные кластеры</span></div></div>
+        <div class="onto" id="onto"></div>
+      </div>
+      <div class="card c4">
+        <div class="card-h"><div><h2>Источники и авторитетность</h2><div class="sub">Вес источника в расчётах</div></div>
+          <span class="help" tabindex="0">?<span class="tip"><b>Как считается вес источника</b>
+            <ul><li><b>Авторитетность 50 %</b> — индекс качества сайта (СКС / SQI Яндекса, проверка на pr-cy.ru) для медиа; для научных центров — цитируемость в РИНЦ.</li>
+            <li><b>Цитируемость 30 %</b> — как часто материалы источника перепечатывают другие источники контура.</li>
+            <li><b>Популярность 20 %</b> — оценка посещаемости и охвата.</li>
+            <li>Итог нормируется к 100. Упоминание умножается на вес источника при расчёте сигналов и стадий.</li></ul></span></span></div>
+        <div id="srcList"></div>
+      </div>
+      <div class="card c12">
+        <div class="card-h"><div><h2>Методика: от публикации к решению</h2><div class="sub">Как поток данных превращается в аналитику</div></div></div>
+        <div class="pipe" id="method"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>OilTech Radar · концепт версии 4.0 · данные раздела «Новости → ИТ и автоматизация» — реальный поток прототипа 3.1; остальные разделы — макет целевого охвата</span>
+  <span>Прогнозы — качественные сценарии по динамике упоминаний, не инвестиционная рекомендация</span>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="drawer" id="detail" aria-hidden="true">
+  <div class="drawer-h"><div><div class="label" id="dLabel"></div><h2 id="dTitle"></h2></div><button class="x" id="dClose" aria-label="Закрыть">✕</button></div>
+  <div class="drawer-b" id="dBody"></div>
+</aside>
+
+<aside class="drawer" id="settings" aria-hidden="true">
+  <div class="drawer-h"><div><div class="label">Настройки</div><h2>Потоки и источники</h2><div class="small muted" style="margin-top:4px">Применяются ко всем разделам радара</div></div><button class="x" id="sClose" aria-label="Закрыть">✕</button></div>
+  <div class="drawer-b">
+    <div class="set-group">
+      <h3>Обновление данных</h3>
+      <div class="set-row"><div>Частота<div class="h">Сбор источников и пересчёт трендов</div></div>
+        <div class="seg"><button data-mode="daily">Ежедневно</button><button data-mode="weekly" aria-pressed="true">Еженедельно</button><button data-mode="manual">Вручную</button></div></div>
+      <div class="set-row"><div>Последний прогон<div class="h">18 сен 2026, 10:07 · 15 мин · 41 новая статья</div></div><button class="btn primary" id="btnRunNow">Обновить сейчас</button></div>
+      <div class="prog" id="prog"><i></i></div>
+    </div>
+
+    <div class="set-group">
+      <h3>Потоки событий</h3>
+      <div class="set-row"><div><span class="tag news" style="margin-right:6px">Медиа</span>Новости, обзоры, конференции<div class="h">6 источников · 410 статей</div></div><label class="switch"><input type="checkbox" checked><i></i></label></div>
+      <div class="set-row"><div><span class="tag sci" style="margin-right:6px">Наука</span>Публикации, диссертации, патенты<div class="h">eLibrary, РИНЦ, ФИПС, сайты вузов и НИИ</div></div><label class="switch"><input type="checkbox" checked><i></i></label></div>
+      <div class="set-row"><div><span class="tag pol" style="margin-right:6px">Политика</span>Санкции, законы, инциденты, рынок<div class="h">Официальные реестры ЕС, OFAC, pravo.gov.ru, ОПЕК, отраслевые СМИ</div></div><label class="switch"><input type="checkbox" checked><i></i></label></div>
+      <div class="set-row"><div><span class="tag inv" style="margin-right:6px">Инвестиции</span>Сделки, гранты, стартапы<div class="h">Реестры фондов, Сколково, пресс-релизы</div></div><label class="switch"><input type="checkbox" checked><i></i></label></div>
+    </div>
+
+    <div class="set-group">
+      <h3>Источники <span class="tag" id="srcCount"></span></h3>
+      <div class="src-mgr" id="srcMgr"></div>
+      <div class="add-src"><input type="url" id="srcUrl" placeholder="https://site.ru — радар сам найдёт ленту новостей"><button class="btn primary" id="srcAdd">Добавить</button></div>
+      <div class="small muted">Новый сайт проходит проверку: находим раздел новостей, извлекаем 5 пробных статей, оцениваем авторитетность. Занимает около минуты.</div>
+    </div>
+
+    <div class="set-group">
+      <h3>Направления в фокусе</h3>
+      <div class="small muted">Снимите отметку, чтобы скрыть направление из обзора и сигналов</div>
+      <div class="checks" id="topicChecks"></div>
+    </div>
+
+    <div class="set-group">
+      <h3>Оповещения</h3>
+      <div class="set-row"><div>Еженедельный дайджест<div class="h">Понедельник, 09:00 · сигналы недели и изменения</div></div><label class="switch"><input type="checkbox" checked><i></i></label></div>
+      <div class="set-row"><div>Мгновенно при сильном сигнале<div class="h">Рост направления более чем в 2 раза за неделю</div></div><label class="switch"><input type="checkbox"><i></i></label></div>
+      <div class="set-row"><div>Отслеживаемые компании<div class="h">Уведомлять о новых событиях</div></div><span class="small">Роснефть, Газпром нефть, Лукойл</span></div>
+    </div>
+
+    <div class="set-group">
+      <h3>Методика расчётов</h3>
+      <div class="set-row"><div>Учитывать вес источника<div class="h">Авторитетность, цитируемость, популярность</div></div><label class="switch"><input type="checkbox" checked><i></i></label></div>
+      <div class="set-row"><div>Порог сигнала<div class="h">Рост упоминаний к базе за 12 недель</div></div><select><option>+25 %</option><option selected>+40 %</option><option>+60 %</option><option>+100 %</option></select></div>
+      <div class="set-row"><div>Минимум источников для сигнала</div><select><option>2</option><option selected>3</option><option>5</option></select></div>
+    </div>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>

@@ -1,0 +1,82 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Поток — OilTech Radar</title>
+  <script src="/static/theme-init.js?v=1"></script>
+  <link rel="stylesheet" href="/static/concept.css?v=3">
+  <link rel="stylesheet" href="/static/future-flow.css?v=30">
+  <link rel="stylesheet" href="/static/themes.css?v=2">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Навигация">
+      <a class="brand" href="/"><span class="brand-mark">◈</span><span>OILTECH<br><strong>RADAR</strong></span></a>
+      <span class="side-label">ПОТОКИ СОБЫТИЙ</span>
+      <nav class="side-nav flow-side-nav">
+        <a href="/"><span>◫</span> Обзор</a>
+        <a href="/flows/news/digital" data-flow-link="digital"><span>↗</span> ИТ и автоматизация</a>
+        <a href="/flows/science" data-flow-link="science"><span>◈</span> Наука и патенты</a>
+        <a href="/flows/investments" data-flow-link="investments"><span>◇</span> Инвестиции и стартапы</a>
+        <a href="/flows/policy" data-flow-link="policy"><span>⚖</span> Политика и рынок</a>
+        <a href="/flows/foreign-companies" data-flow-link="foreign"><span>◎</span> Иностранные компании</a>
+      </nav>
+      <div class="side-bottom"><span class="future-status-dot"></span><span>Поток из базы articles<br><small>Красные блоки — план аналитики</small></span></div>
+    </aside>
+    <main class="main future-main">
+      <header class="topbar"><div class="breadcrumb">Платформа <span>/</span> <b id="breadcrumbFlow">Поток</b></div><a class="icon-button" href="/#streams">← Контур продукта</a></header>
+      <section class="flow-hero-concept" id="flowHero">
+        <div><span class="eyebrow" id="flowKicker">ПОТОК</span><h1 id="flowTitle">Загрузка…</h1><p id="flowDescription"></p></div>
+        <div class="flow-hero-symbol" id="flowSymbol" aria-hidden="true">◈</div>
+      </section>
+      <nav class="flow-tabs" aria-label="Переключение потоков">
+        <a href="/flows/news/digital" data-flow-tab="digital">01 · ИТ и автоматизация</a>
+        <a href="/flows/science" data-flow-tab="science">02 · Наука и патенты</a>
+        <a href="/flows/investments" data-flow-tab="investments">03 · Инвестиции и стартапы</a>
+        <a href="/flows/policy" data-flow-tab="policy">04 · Политика и рынок</a>
+        <a href="/flows/foreign-companies" data-flow-tab="foreign">05 · Иностранные компании</a>
+      </nav>
+      <div class="flow-metrics-row" id="flowMetricsRow">
+        <section class="flow-metrics" id="flowMetrics" aria-label="Показатели потока"></section>
+        <aside class="flow-year-filter" id="flowYearFilter" hidden aria-label="Фильтр по году"></aside>
+      </div>
+      <div id="flowContent"></div>
+      <footer class="footer"><span>OILTECH RADAR · МАКЕТ ЦЕЛЕВОГО ОХВАТА</span></footer>
+    </main>
+  </div>
+  <div class="drawer-backdrop" id="patentBackdrop" hidden></div>
+  <aside class="patent-drawer" id="patentDrawer" aria-hidden="true">
+    <header>
+      <div>
+        <div class="pill" id="patentDrawerStage">Патент</div>
+        <h2 id="patentDrawerTitle"></h2>
+        <p class="muted" id="patentDrawerMeta"></p>
+      </div>
+      <div class="patent-drawer-actions">
+        <button type="button" id="patentDrawerBack" hidden>← К списку</button>
+        <button type="button" id="patentDrawerClose">Закрыть</button>
+      </div>
+    </header>
+    <div id="patentDrawerBrowse" class="patent-drawer-browse" hidden></div>
+    <div id="patentDrawerDetail" class="patent-drawer-body">
+      <div class="patent-drawer-tags" id="patentDrawerTags"></div>
+      <section id="patentDrawerInsightWrap" hidden>
+        <h3>Почему важно</h3>
+        <div id="patentDrawerInsight" class="flow-insight"></div>
+      </section>
+      <section>
+        <h3>Первичный анализ</h3>
+        <p id="patentDrawerAbstract" class="patent-drawer-abstract"></p>
+      </section>
+      <section>
+        <h3>Источник</h3>
+        <p id="patentDrawerSource"></p>
+      </section>
+    </div>
+  </aside>
+  <script src="/static/flow-data-cache.js?v=4"></script>
+  <script src="/static/future-flow.js?v=47" defer></script>
+</body>
+</html>
